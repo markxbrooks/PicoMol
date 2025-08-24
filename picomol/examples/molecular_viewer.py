@@ -16,8 +16,8 @@ from picogl.ui.backend.glut.window.object import RenderWindow
 from picogl.shaders.registry import ShaderRegistry
 from picogl.shaders.type import ShaderType
 from picogl.backend.modern.core.vertex.array.object import VertexArrayObject
-
-from picogl.logger import setup_logging, Logger as log
+from picogl.backend.modern.core.shader.program import ShaderProgram
+from utils.pdb_loader import PDBLoader
 
 
 class MolecularViewer:
@@ -38,7 +38,7 @@ class MolecularViewer:
     
     def _load_structure(self):
         """Load PDB structure and convert to PicoGL format"""
-        log.message(f"Loading PDB structure from: {self.pdb_path}")
+        print(f"Loading PDB structure from: {self.pdb_path}")
         self.pdb_loader = PDBLoader(self.pdb_path)
         
         # Convert to PicoGL data
@@ -47,21 +47,21 @@ class MolecularViewer:
         self.atom_data = picogl_data['atoms']
         self.bond_data = picogl_data['bonds']
         
-        log.message(f"Loaded {self.atom_data['count']} atoms and {self.bond_data['count']} bonds")
-        log.message(f"Residues: {len(picogl_data['residues'])}")
-        log.message(f"Chains: {picogl_data['chains']}")
+        print(f"Loaded {self.atom_data['count']} atoms and {self.bond_data['count']} bonds")
+        print(f"Residues: {len(picogl_data['residues'])}")
+        print(f"Chains: {picogl_data['chains']}")
     
     def _load_shaders(self):
         """Load molecular visualization shaders"""
-        log.message("Loading molecular visualization shaders...")
+        print("Loading molecular visualization shaders...")
         
         # Load all available shader types
         for shader_type in ShaderType:
             try:
                 self.shader_registry.load_and_add(shader_type)
-                log.message(f"Loaded shader: {shader_type}")
+                print(f"Loaded shader: {shader_type}")
             except Exception as e:
-                log.message(f"Warning: Could not load shader {shader_type}: {e}")
+                print(f"Warning: Could not load shader {shader_type}: {e}")
     
     def create_atom_mesh(self) -> MeshData:
         """Create mesh data for atoms (spheres)"""
@@ -109,9 +109,9 @@ class MolecularViewer:
             with open(output_path, 'w') as f:
                 json.dump(molviewspec, f, indent=2)
             
-            log.message(f"Exported MolViewSpec to: {output_path}")
+            print(f"Exported MolViewSpec to: {output_path}")
         else:
-            log.message("No PDB structure loaded to export")
+            print("No PDB structure loaded to export")
 
 
 class MolecularRenderWindow(RenderWindow):
@@ -229,9 +229,7 @@ class MolecularRenderWindow(RenderWindow):
 def main():
     """Main function to demonstrate molecular viewing"""
     # Example PDB file path - you'll need to provide your own PDB file
-    setup_logging()
-    
-    pdb_path = "../examples/data/2VUG.pdb"
+    pdb_path = "data/2VUG.pdb"
     
     try:
         # Create molecular viewer
@@ -255,17 +253,17 @@ def main():
         render_window.run()
         
     except FileNotFoundError as e:
-        log.message(f"Error: {e}")
-        log.message("\nTo use this example:")
-        log.message("1. Place a PDB file in the data/ directory")
-        log.message("2. Update the pdb_path variable in main()")
-        log.message("3. Run the script again")
-        log.message("\nExample PDB files can be downloaded from:")
-        log.message("- RCSB PDB: https://www.rcsb.org/")
-        log.message("- AlphaFold DB: https://alphafold.ebi.ac.uk/")
+        print(f"Error: {e}")
+        print("\nTo use this example:")
+        print("1. Place a PDB file in the data/ directory")
+        print("2. Update the pdb_path variable in main()")
+        print("3. Run the script again")
+        print("\nExample PDB files can be downloaded from:")
+        print("- RCSB PDB: https://www.rcsb.org/")
+        print("- AlphaFold DB: https://alphafold.ebi.ac.uk/")
         
     except Exception as e:
-        log.message(f"Error: {e}")
+        print(f"Error: {e}")
         import traceback
         traceback.print_exc()
 
