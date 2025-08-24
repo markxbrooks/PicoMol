@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\MBrooks\projects\picogl\picomol\examples\pdb_picogl_viewer.py", line 263, in main
+    render_window = MolecularRenderWindow(
+  File "C:\Users\MBrooks\projects\picogl\picomol\examples\pdb_picogl_viewer.py", line 47, in __init__
+    super().__init__(**kwargs)
+  File "C:\Users\MBrooks\projects\picogl\picogl\ui\backend\glut\window\object.py", line 33, in __init__
+    self.renderer = ObjectRenderer(
+  File "C:\Users\MBrooks\projects\picogl\picogl\renderer\object.py", line 30, in __init__
+    self.data.vertex_count = len(self.data.vbo.flatten()) // 3
+AttributeError: 'NoneType' object has no attribute 'vbo'
