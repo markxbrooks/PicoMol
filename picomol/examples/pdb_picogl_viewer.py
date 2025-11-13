@@ -113,7 +113,7 @@ class MolecularRenderWindow(RenderWindow):
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LESS)
         
-        # Set background color
+        # Set background colour
         glClearColor(0.1, 0.1, 0.2, 1.0)
     
     def _create_vaos(self):
